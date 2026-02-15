@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barista Flower Hookah Lounge</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  font-family: 'Playfair Display', serif;
+  color: #d4af37;
+  overflow: hidden;
+}
+
+/* LOADING SCREEN */
+#loadingScreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#loadingLogoWrapper {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid gold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(212,175,55,0.05);
+  position: relative;
+}
+
+.ripple {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 2px solid gold;
+  opacity: 0.4;
+  animation: rippleAnim 2s infinite;
+}
+
+.ripple:nth-child(1) { animation-delay: 0s; }
+.ripple:nth-child(2) { animation-delay: 0.7s; }
+.ripple:nth-child(3) { animation-delay: 1.4s; }
+
+@keyframes rippleAnim {
+  0% { transform: scale(0.5); opacity: 0.4; }
+  50% { transform: scale(1.2); opacity: 0.1; }
+  100% { transform: scale(0.5); opacity: 0.4; }
+}
+
+#loadingLogo {
+  width: 120px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 15px gold;
+}
+
+#loadingText {
+  margin-top: 20px;
+  font-size: 24px;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(90deg, #d4af37 25%, #fff 50%, #d4af37 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2s infinite;
+  font-weight: bold;
+}
+
+#loadingDots {
+  display: flex;
+  margin-top: 15px;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #d4af37;
+  animation: dotBounce 1.2s infinite;
+}
+
+.dot:nth-child(1) { animation-delay: 0s; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* MENU */
+#menu {
+  display: none;
+  padding: 15px;
+  max-width: 500px;
+  margin: 20px auto;
+  border-radius: 15px;
+  background: radial-gradient(circle at top, rgba(212,175,55,0.05), rgba(0,0,0,0.85));
+  box-shadow: 0 0 40px rgba(212,175,55,0.2);
+  backdrop-filter: blur(5px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* shimmer overlay preko cijelog menija */
+#menu::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(120deg, rgba(212,175,55,0.05), rgba(212,175,55,0.02), rgba(212,175,55,0.05));
+  animation: menuShimmer 6s linear infinite;
+  pointer-events: none;
+  border-radius: 15px;
+}
+
+@keyframes menuShimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+/* logo sa pulsirajućim radial gradientom */
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.logo::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  animation: menuRipple 3s infinite;
+  z-index: -1;
+}
+
+@keyframes menuRipple {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
+  100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+}
+
+.logo img {
+  width: 150px;
+  border-radius: 50%;
+  border: 3px solid gold;
+  padding: 10px;
+  background: rgba(212,175,55,0.05);
+  box-shadow: 0 0 15px gold;
+  position: relative;
+  z-index: 1;
+}
+
+/* PULSIRAJUĆI TEKST */
+.title {
+  text-align: center;
+  font-size: 28px;
+  margin-top: 10px;
+  animation: textPulse 2s infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% { text-shadow: 0 0 10px gold; opacity: 0.9; }
+  50% { text-shadow: 0 0 25px gold; opacity: 1; }
+}
+
+.subtitle {
+  text-align: center;
+  color: #777;
+  margin-bottom: 25px;
+}
+
+.section {
+  margin-bottom: 25px;
+}
+
+.section h2 {
+  border-bottom: 1px solid gold;
+  padding-bottom: 5px;
+  font-size: 20px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(212,175,55,0.02);
+  margin-top: 5px;
+}
+
+.hookah {
+  text-align: center;
+  border: 2px solid gold;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 22px;
+  margin-top: 15px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 25px;
+  color: #555;
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loadingScreen">
+  <div id="loadingLogoWrapper">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <img src="logo.webp" id="loadingLogo" alt="Logo">
+  </div>
+  <div id="loadingText">Dobro došli!</div>
+  <div id="loadingDots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<!-- MENU -->
+<div id="menu">
+  <div class="logo">
+    <img src="logo.webp" alt="Logo">
+  </div>
+
+  <div class="title">BARISTA FLOWER</div>
+  <div class="subtitle">Hookah Lounge</div>
+
+  <div class="section">
+    <h2>Topli napici</h2>
+    <div class="item"><span>Espresso</span><span>2 KM</span></div>
+    <div class="item"><span>Nes Classic</span><span>3 KM</span></div>
+    <div class="item"><span>Ness Caffe</span><span>3 KM</span></div>
+    <div class="item"><span>Cappuccino</span><span>3 KM</span></div>
+    <div class="item"><span>Čaj</span><span>2 KM</span></div>
+  </div>
+
+  <div class="section">
+    <h2>Gazirana pića</h2>
+    <div class="item"><span>Coca Cola</span><span>3.50 KM</span></div>
+    <div class="item"><span>Fanta</span><span>3.50 KM</span></div>
+    <div class="item"><span>Sprite</span><span>3.50 KM</span></div>
+    <div class="item"><span>Cocta</span><span>3.50 KM</span></div>
+    <div class="item"><span>Red Bull</span><span>5 KM</span></div>
+  </div>
+
+  <div class="hookah">
+    VODENA LULA <br> 8 KM
+  </div>
+
+  <footer>BARISTA FLOWER © 2026</footer>
+</div>
+
+<script>
+setTimeout(function() {
+  document.getElementById("loadingScreen").style.display = "none";
+  document.getElementById("menu").style.display = "block";
+  document.body.style.overflow = "auto";
+}, 3000);
+</script>
+
+</body>
+</html>
